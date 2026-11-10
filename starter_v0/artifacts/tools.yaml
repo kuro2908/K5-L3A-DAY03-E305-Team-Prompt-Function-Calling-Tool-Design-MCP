@@ -16,7 +16,12 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: >
+      Hỏi lại người dùng một câu rồi dừng chờ trả lời. LUÔN ghi rõ response_type.
+      Dùng response_type="text" khi thiếu thông tin bắt buộc (không rõ tài khoản nào,
+      không có URL). Dùng response_type="yes_no" khi người dùng yêu cầu gửi/đăng/publish
+      bất cứ thứ gì: hỏi xác nhận "Bạn có chắc muốn gửi ... không?", không hỏi lại nội dung.
+      Không dùng khi đã đủ thông tin để gọi tool khác.
     parameters:
       type: object
       properties:
@@ -26,7 +31,10 @@ tools:
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: >
+      Lấy tweet gần đây của MỘT tài khoản X/Twitter cụ thể. Dùng khi người dùng nêu rõ
+      tên người hoặc handle ("tweet của Sam Altman"). Không dùng cho thảo luận theo chủ đề
+      (dùng social_search). Nếu chưa biết tài khoản nào thì gọi clarify, không tự đoán.
     parameters:
       type: object
       properties:
@@ -35,7 +43,11 @@ tools:
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: >
+      Tìm tweet theo từ khóa/chủ đề trên X/Twitter. Dùng khi người dùng hỏi mọi người đang
+      nói gì về một chủ đề trên Twitter/mạng xã hội. Không dùng cho tweet của một người cụ thể
+      (dùng timeline), tin tức trên web (dùng lookup), hoặc khi người dùng đã bảo bỏ/không
+      tìm trên Twitter nữa.
     parameters:
       type: object
       properties:
@@ -45,7 +57,9 @@ tools:
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: >
+      Tìm kiếm trên web (báo, trang tin, blog). Dùng cho tin tức và thông tin chung trên
+      internet. Không dùng để đọc một URL đã biết (dùng fetch) hoặc tìm tweet (dùng social_search).
     parameters:
       type: object
       properties:
@@ -56,7 +70,9 @@ tools:
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: >
+      Đọc nội dung một URL cụ thể mà người dùng ĐÃ cung cấp. Không tự đoán hay bịa URL;
+      nếu người dùng nói "bài này" mà không có link thì gọi clarify.
     parameters:
       type: object
       properties:
@@ -64,7 +80,9 @@ tools:
       required: [url]
 
   - name: format
-    description: "Trình bày dữ liệu đã có thành văn bản."
+    description: >
+      Trình bày các item ĐÃ thu thập được từ tool khác thành digest markdown. Chỉ dùng sau khi
+      đã có dữ liệu. Không dùng để tìm thông tin.
     parameters:
       type: object
       properties:
@@ -86,7 +104,10 @@ tools:
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: >
+      Gửi text lên Telegram channel. Đây là hành động ra bên ngoài, không rút lại được.
+      CHỈ gọi khi người dùng đã xác nhận đồng ý ở lượt trước (qua clarify yes_no), với
+      confirmed=true. Chưa xác nhận thì gọi clarify yes_no. Không dùng để trả lời câu hỏi.
     parameters:
       type: object
       properties:
@@ -95,7 +116,9 @@ tools:
       required: [text]
 
   - name: policy
-    description: "Tìm trong tài liệu nội bộ."
+    description: >
+      Tìm trong tài liệu chính sách nội bộ công ty (AI research, trích dẫn nguồn, bảo mật dữ liệu,
+      xuất bản ra ngoài, sử dụng tool). Dùng khi người dùng hỏi công ty quy định gì về một việc.
     parameters:
       type: object
       properties:
@@ -105,7 +128,9 @@ tools:
       required: [query]
 
   - name: papers
-    description: "Tìm bài báo khoa học."
+    description: >
+      Tìm paper khoa học trên arXiv theo từ khóa. Dùng khi hỏi về nghiên cứu/paper.
+      Không dùng cho tin tức (dùng lookup).
     parameters:
       type: object
       properties:
@@ -115,7 +140,10 @@ tools:
       required: [query]
 
   - name: paper_text
-    description: "Lấy nội dung text của một bài báo."
+    description: >
+      Tải và trích text của một paper arXiv theo ID hoặc URL đã biết. Dùng khi cần đọc
+      nội dung một paper cụ thể.
+
     parameters:
       type: object
       properties:
