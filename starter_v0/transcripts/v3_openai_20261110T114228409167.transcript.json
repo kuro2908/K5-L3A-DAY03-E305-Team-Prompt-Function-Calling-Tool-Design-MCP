@@ -1,0 +1,34 @@
+{
+  "transcript_id": "v3_openai_20261110T114228409167",
+  "version": "v3",
+  "artifact_version": "v3+p90938016e27e+t44d2a3e5040f",
+  "prompt_hash": "90938016e27e5b90d52517a2ccc2a45cdb2fc1b5dfb20dc5fd11ba6125846747",
+  "tools_hash": "44d2a3e5040f731ee20809b0b1340c128b3654f613698c40220075b7d2d80bb9",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "C:\\Users\\ADMIN\\Documents\\Lab Vin\\K5-L3A-DAY03-E305Team-ResearchAgentToolEval-\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\ADMIN\\Documents\\Lab Vin\\K5-L3A-DAY03-E305Team-ResearchAgentToolEval-\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-11-10T11:42:33",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-11-10T11:42:33",
+      "user": "hêllo",
+      "status": "answered",
+      "assistant_text": "Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-11-10T11:42:34"
+    }
+  ],
+  "updated_at": "2026-11-10T11:42:34"
+}
