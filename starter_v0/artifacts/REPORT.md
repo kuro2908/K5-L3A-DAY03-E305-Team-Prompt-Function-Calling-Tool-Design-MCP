@@ -23,7 +23,12 @@ Thiếu thông tin thì agent **hỏi lại chứ không đoán**. Trước khi 
 
 **Link dùng thử (deploy):**
 
-> URL: https://universal-pit-stated-describe.trycloudflare.com/
+> Dán link public để team khác mở thử ngay. Cách deploy nhanh bằng Cloudflare Tunnel xem README. Nếu deploy Vercel/Streamlit Cloud thì dán link đó.
+>
+> URL: https://tampa-holders-latter-recordings.trycloudflare.com/
+## A2. Tool agent có
+
+> Liệt kê các tool agent đang dùng (gồm tool mới nhóm tự thêm). Mỗi tool 1 dòngx: tên + làm được gì.
 
 ## A2. Tool agent có
 
