@@ -26,6 +26,8 @@ from versioning import artifact_version_dict, build_artifact_version
 ARTIFACTS_DIR = ROOT / "artifacts"
 TRANSCRIPTS_DIR = ROOT / "transcripts"
 PROVIDERS = ["openai"]
+HISTORY_WINDOW = 5
+MAX_TOOL_ROUNDS = 4
 
 st.set_page_config(page_title="Research Agent", page_icon="🔎", layout="wide")
 
@@ -52,12 +54,7 @@ st.caption("Chat UI cho research agent của nhóm. Dùng để demo Team showdo
 with st.sidebar:
     st.header("Cấu hình")
     provider_name = st.selectbox("Provider", PROVIDERS, index=0)
-    model_override = st.text_input("Model override (để trống = mặc định của provider)", value="")
     version_label = st.text_input("Version label (vd: v3)", value="v3")
-    system_prompt_path = st.text_input("System prompt file", value=str(ARTIFACTS_DIR / "system_prompt.md"))
-    tools_path = st.text_input("Tools file", value=str(ARTIFACTS_DIR / "tools.yaml"))
-    history_window = st.number_input("History window (số lượt giữ lại)", min_value=0, max_value=20, value=5)
-    max_tool_rounds = st.number_input("Max tool rounds / lượt", min_value=1, max_value=10, value=4)
 
     apply_clicked = st.button("▶️ Áp dụng cấu hình / Bắt đầu phiên mới", use_container_width=True)
     reset_clicked = st.button("🗑️ Xoá hội thoại (giữ cấu hình)", use_container_width=True)
@@ -71,13 +68,15 @@ with st.sidebar:
 
 if apply_clicked:
     try:
-        sp_path = Path(system_prompt_path)
-        tl_path = Path(tools_path)
+        # Fixed, non-user-editable paths: this app is exposed publicly via a tunnel,
+        # so these must never come from free-text input (arbitrary file read risk).
+        sp_path = ARTIFACTS_DIR / "system_prompt.md"
+        tl_path = ARTIFACTS_DIR / "tools.yaml"
         system_prompt_text = sp_path.read_text(encoding="utf-8")
         declarations = load_tool_declarations(tl_path)
         openai_tools = to_openai_tools(declarations)
         provider = make_provider(provider_name)
-        selected_model = model_override.strip() or getattr(provider, "default_model", None)
+        selected_model = getattr(provider, "default_model", None)
         artifact_version = build_artifact_version(version_label.strip() or "v0", sp_path, tl_path)
 
         timestamp = datetime.now().strftime("%Y%m%dT%H%M%S%f")
@@ -99,8 +98,8 @@ if apply_clicked:
             "_system_prompt_path": str(sp_path),
             "_tools_path": str(tl_path),
             "_openai_tools": openai_tools,
-            "_history_window": int(history_window),
-            "_max_tool_rounds": int(max_tool_rounds),
+            "_history_window": HISTORY_WINDOW,
+            "_max_tool_rounds": MAX_TOOL_ROUNDS,
             "_artifact_version_dict": artifact_version_dict(artifact_version),
         })
         st.success(f"Đã khởi tạo phiên. artifact_version = {artifact_version.artifact_version}")
