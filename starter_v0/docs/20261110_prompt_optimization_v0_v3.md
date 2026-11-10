@@ -238,3 +238,37 @@ Nhánh này đã merge `main`, gồm commit "add 4 tool" (`github_search`, `cita
 - `tools.yaml` có **14 tool**, `pytest tests/test_tool_contract.py` pass (75 passed).
 - `tools_hash` đã **khác v3** vì có thêm 4 khai báo tool. Kết quả 1.00 của v3 được đo **trước khi** có 4 tool mới.
 - **Việc tiếp theo, v4:** chạy lại base eval với 14 tool để kiểm tra tool mới không làm giảm điểm, rồi chạy group eval có case route tới tool mới.
+
+## 9. v4: gộp 4 tool mới
+
+### 9.1. Giả thuyết
+
+> Thêm 4 tool (`github_search`, `citation_check`, `currency_convert`, `weather_forecast`) không làm nhiễu routing của 10 tool cũ, nên base eval giữ 1.00. Group eval đo model có route đúng các tool mới không.
+
+### 9.2. Thay đổi
+
+Không sửa prompt (`prompt_hash` giống v3). `tools.yaml` có thêm 4 khai báo tool (`tools_hash` `44d2a3e5040f…`).
+
+### 9.3. Kết quả
+
+| Bộ eval | Kết quả | Run file |
+|---|---|---|
+| Base (20 case) | **1.00**, không regression | `runs/v4_B_base_openai_20261110T110804374522.json` |
+| Group (10 case, 4 tool mới) | **0.80** (8/10) | `runs/v4_B_group_openai_20261110T110846236722.json` |
+
+| Case sai | Agent làm | Phân tích |
+|---|---|---|
+| G05 "Ngày mai ở đó có mưa không?" | `weather_forecast(city="Hanoi")` | Tự đoán thành phố. Rule "không đoán" trong prompt chỉ nêu ví dụ tài khoản / URL. Description `weather_forecast` chưa có "thiếu thành phố thì clarify" |
+| M03 "250 EUR → VND → thực ra JPY → vẫn dùng số tiền ban đầu" | `currency_convert(250, EUR, VND)` | "ban đầu" bị hiểu là cả yêu cầu ban đầu, nên chỗ sửa sang JPY bị huỷ |
+
+Các rủi ro dự đoán trước nhưng **không xảy ra**: model tự ghi tên thành phố đúng dạng (`Hanoi`, `Da Nang`) và chép nguyên văn `draft_text`.
+
+### 9.4. Phát hiện qua chat live (`transcripts/v4_openai_20261110T111331124873.transcript.json`)
+
+- Agent không từ chối câu hỏi thời tiết, dù đoạn "Phạm vi" trong prompt chỉ nhắc AI/công nghệ.
+- `weather_forecast(days=1)` chỉ trả về **hôm nay**, nhưng agent trả lời "ngày mai". Đây là lỗi ý nghĩa tham số mà cả eval lẫn unit test đều không bắt được.
+
+### 9.5. Hướng tiếp theo (chưa làm)
+
+- v5 (`tools.yaml`): description 4 tool mới thêm "thiếu thông tin thì clarify", và ghi rõ `days=1` là hôm nay. Nhắm G05.
+- v6 (`system_prompt.md`): rule "giữ X chỉ giữ X, không huỷ các chỗ sửa khác". Nhắm M03.
