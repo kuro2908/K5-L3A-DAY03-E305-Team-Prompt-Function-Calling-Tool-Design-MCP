@@ -1,0 +1,892 @@
+{
+  "run_id": "v4_B_group_openai_20261110T110846236722",
+  "version": "v4",
+  "artifact_version": "v4+p90938016e27e+t44d2a3e5040f",
+  "prompt_hash": "90938016e27e5b90d52517a2ccc2a45cdb2fc1b5dfb20dc5fd11ba6125846747",
+  "tools_hash": "44d2a3e5040f731ee20809b0b1340c128b3654f613698c40220075b7d2d80bb9",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "C:\\Users\\minhvu\\Desktop\\vin\\lab3\\Day03-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\minhvu\\Desktop\\vin\\lab3\\Day03-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Team eval for the four custom tools.",
+  "generated_at": "2026-11-10T11:08:46",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 8,
+    "case_accuracy": 0.8,
+    "tool_routing_accuracy": 0.9,
+    "argument_accuracy": 0.8,
+    "multiturn_accuracy": 0.8,
+    "failure_counts": {
+      "missing_info": 1,
+      "wrong_arg_value": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 1,
+      "wrong_arg_value": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_github_python_stars",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Tìm mã nguồn mở route tới github_search với language, sort và limit."
+      },
+      "input": "Tìm 3 repository Python phổ biến nhất về RAG trên GitHub.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "github_search",
+            "args": {
+              "query": "RAG",
+              "language": "python",
+              "sort": "stars",
+              "max_results": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "github_search",
+            "args": {
+              "query": "RAG",
+              "language": "Python",
+              "sort": "stars",
+              "max_results": 3
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "github_search",
+          "args": {
+            "query": "RAG",
+            "language": "Python",
+            "sort": "stars",
+            "max_results": 3
+          },
+          "result": {
+            "tool": "search_github_repos",
+            "query": "RAG",
+            "language": "Python",
+            "sort": "stars",
+            "items": [
+              {
+                "title": "langgenius/dify",
+                "url": "https://github.com/langgenius/dify",
+                "source": "github.com",
+                "summary": "Build Agentic workflows, RAG pipelines, with rich AI model and tool support on one collaborative workspace. Deploy on cloud, VPC, or self-hosted, so teams move from prototype to production without rebuilding the stack.",
+                "stars": 160788,
+                "language": "Python"
+              },
+              {
+                "title": "langchain-ai/langchain",
+                "url": "https://github.com/langchain-ai/langchain",
+                "source": "github.com",
+                "summary": "The agent engineering platform.",
+                "stars": 149287,
+                "language": "Python"
+              },
+              {
+                "title": "Graphify-Labs/graphify",
+                "url": "https://github.com/Graphify-Labs/graphify",
+                "source": "github.com",
+                "summary": "Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. A /graphify skill for Claude Code, Cursor, Codex, and Gemini CLI: local deterministic AST parsing, every edge explained, no vector store.",
+                "stars": 145106,
+                "language": "Python"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_citation_check_privacy",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra draft route tới citation_check, không tra policy hay web."
+      },
+      "input": "Kiểm tra riêng quyền riêng tư của bản nháp này: Liên hệ minh@example.com để nhận báo cáo.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "citation_check",
+            "args": {
+              "draft_text": "Liên hệ minh@example.com để nhận báo cáo.",
+              "check_type": "privacy"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "citation_check",
+            "args": {
+              "draft_text": "Liên hệ minh@example.com để nhận báo cáo.",
+              "check_type": "privacy"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "citation_check",
+          "args": {
+            "draft_text": "Liên hệ minh@example.com để nhận báo cáo.",
+            "check_type": "privacy"
+          },
+          "result": {
+            "tool": "check_draft_compliance",
+            "check_type": "privacy",
+            "passed": false,
+            "url_count": 0,
+            "violations": [
+              {
+                "rule": "pii_email_detected",
+                "message": "Draft contains 1 email address(es), which may leak PII."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_currency_usd_to_vnd",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Quy đổi tiền tệ nhận diện amount và hai mã ISO."
+      },
+      "input": "Đổi 100 USD sang VND theo tỷ giá hiện tại.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "currency_convert",
+            "args": {
+              "amount": 100,
+              "from_currency": "USD",
+              "to_currency": "VND"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "currency_convert",
+            "args": {
+              "amount": 100,
+              "from_currency": "USD",
+              "to_currency": "VND"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "currency_convert",
+          "args": {
+            "amount": 100,
+            "from_currency": "USD",
+            "to_currency": "VND"
+          },
+          "result": {
+            "tool": "convert_currency",
+            "amount": 100.0,
+            "from_currency": "USD",
+            "to_currency": "VND",
+            "rate": 25527.690563,
+            "converted_amount": 2552769.06
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_weather_hanoi_three_days",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Dự báo thời tiết route tới weather_forecast với thành phố, ngày và đơn vị."
+      },
+      "input": "Dự báo thời tiết Hà Nội 3 ngày tới, dùng độ C.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather_forecast",
+            "args": {
+              "city": "Hanoi",
+              "days": 3,
+              "unit": "celsius"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather_forecast",
+            "args": {
+              "city": "Hanoi",
+              "days": 3,
+              "unit": "celsius"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather_forecast",
+          "args": {
+            "city": "Hanoi",
+            "days": 3,
+            "unit": "celsius"
+          },
+          "result": {
+            "tool": "get_weather",
+            "city": "Hanoi",
+            "location": "Hanoi, Vietnam",
+            "unit": "celsius",
+            "days": 3,
+            "current": {
+              "temperature": 18.8,
+              "humidity": 56,
+              "precipitation_mm": 0.0
+            },
+            "daily": [
+              {
+                "date": "2026-11-10",
+                "temp_max": 19.8,
+                "temp_min": 15.4,
+                "precipitation_mm": 0.4
+              },
+              {
+                "date": "2026-11-11",
+                "temp_max": 23.4,
+                "temp_min": 15.5,
+                "precipitation_mm": 0.0
+              },
+              {
+                "date": "2026-11-12",
+                "temp_max": 20.7,
+                "temp_min": 17.3,
+                "precipitation_mm": 15.5
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_weather_missing_city",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Không có địa điểm thì phải hỏi lại thay vì đoán."
+      },
+      "input": "Ngày mai ở đó có mưa không?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "weather_forecast",
+            "args": {
+              "city": "Hanoi",
+              "days": 1
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call weather_forecast"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "weather_forecast",
+          "args": {
+            "city": "Hanoi",
+            "days": 1
+          },
+          "result": {
+            "tool": "get_weather",
+            "city": "Hanoi",
+            "location": "Hanoi, Vietnam",
+            "unit": "celsius",
+            "days": 1,
+            "current": {
+              "temperature": 18.8,
+              "humidity": 56,
+              "precipitation_mm": 0.0
+            },
+            "daily": [
+              {
+                "date": "2026-11-10",
+                "temp_max": 19.8,
+                "temp_min": 15.4,
+                "precipitation_mm": 0.4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M01_github_refine_query",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Giữ query ban đầu và áp dụng language, sort, limit qua nhiều lượt."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm repository mã nguồn mở cho agent."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ lấy TypeScript và ưu tiên repo được cập nhật gần đây."
+        },
+        {
+          "role": "user",
+          "content": "Cho 2 repo thôi."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "github_search",
+            "args": {
+              "query": "agent",
+              "language": "typescript",
+              "sort": "updated",
+              "max_results": 2
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "github_search",
+            "args": {
+              "query": "agent",
+              "language": "typescript",
+              "sort": "updated",
+              "max_results": 2
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "github_search",
+          "args": {
+            "query": "agent",
+            "language": "typescript",
+            "sort": "updated",
+            "max_results": 2
+          },
+          "result": {
+            "tool": "search_github_repos",
+            "query": "agent",
+            "language": "typescript",
+            "sort": "updated",
+            "items": [
+              {
+                "title": "jaytwins1109-gif/cuixiang-agent",
+                "url": "https://github.com/jaytwins1109-gif/cuixiang-agent",
+                "source": "github.com",
+                "summary": "AI Snack Agent V3.0",
+                "stars": 1,
+                "language": "TypeScript"
+              },
+              {
+                "title": "p697/prompix",
+                "url": "https://github.com/p697/prompix",
+                "source": "github.com",
+                "summary": "Prompix: an open-source, mobile-first gallery of AI image & video prompts and agent skills. Browse visually, then open them in your favorite AI app with one tap.",
+                "stars": 0,
+                "language": "TypeScript"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M02_citation_after_draft",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Mang draft từ lượt trước sang citation_check và chọn mode citation."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tôi sẽ gửi bản nháp để kiểm tra trước khi đăng."
+        },
+        {
+          "role": "user",
+          "content": "OpenAI công bố cập nhật mới. Nguồn: https://openai.com/news/"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ kiểm tra xem đã có trích dẫn nguồn chưa."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "citation_check",
+            "args": {
+              "draft_text": "OpenAI công bố cập nhật mới. Nguồn: https://openai.com/news/",
+              "check_type": "citation"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "citation_check",
+            "args": {
+              "draft_text": "OpenAI công bố cập nhật mới. Nguồn: https://openai.com/news/",
+              "check_type": "citation"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "citation_check",
+          "args": {
+            "draft_text": "OpenAI công bố cập nhật mới. Nguồn: https://openai.com/news/",
+            "check_type": "citation"
+          },
+          "result": {
+            "tool": "check_draft_compliance",
+            "check_type": "citation",
+            "passed": true,
+            "url_count": 1,
+            "violations": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "M03_currency_carryover",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Giữ amount và tiền nguồn, thay đúng tiền đích được sửa."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Đổi 250 EUR sang tiền Việt."
+        },
+        {
+          "role": "user",
+          "content": "Thực ra đổi sang JPY."
+        },
+        {
+          "role": "user",
+          "content": "Vẫn dùng số tiền ban đầu nhé."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "currency_convert",
+            "args": {
+              "amount": 250,
+              "from_currency": "EUR",
+              "to_currency": "JPY"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "currency_convert",
+            "args": {
+              "amount": 250,
+              "from_currency": "EUR",
+              "to_currency": "VND"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "to_currency: expected 'JPY', got 'VND'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "currency_convert",
+          "args": {
+            "amount": 250,
+            "from_currency": "EUR",
+            "to_currency": "VND"
+          },
+          "result": {
+            "tool": "convert_currency",
+            "amount": 250.0,
+            "from_currency": "EUR",
+            "to_currency": "VND",
+            "rate": 28612.893554,
+            "converted_amount": 7153223.39
+          }
+        }
+      ]
+    },
+    {
+      "id": "M04_weather_unit_and_days",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Mang thành phố, cập nhật số ngày và đơn vị qua ba lượt."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Thời tiết Tokyo thế nào?"
+        },
+        {
+          "role": "user",
+          "content": "Cho tôi dự báo 5 ngày."
+        },
+        {
+          "role": "user",
+          "content": "Đổi sang độ F."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather_forecast",
+            "args": {
+              "city": "Tokyo",
+              "days": 5,
+              "unit": "fahrenheit"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather_forecast",
+            "args": {
+              "city": "Tokyo",
+              "days": 5,
+              "unit": "fahrenheit"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather_forecast",
+          "args": {
+            "city": "Tokyo",
+            "days": 5,
+            "unit": "fahrenheit"
+          },
+          "result": {
+            "tool": "get_weather",
+            "city": "Tokyo",
+            "location": "Tokyo, Japan",
+            "unit": "fahrenheit",
+            "days": 5,
+            "current": {
+              "temperature": 52.5,
+              "humidity": 69,
+              "precipitation_mm": 0.0
+            },
+            "daily": [
+              {
+                "date": "2026-11-10",
+                "temp_max": 52.9,
+                "temp_min": 46.3,
+                "precipitation_mm": 12.0
+              },
+              {
+                "date": "2026-11-11",
+                "temp_max": 56.0,
+                "temp_min": 42.8,
+                "precipitation_mm": 0.0
+              },
+              {
+                "date": "2026-11-12",
+                "temp_max": 63.4,
+                "temp_min": 43.4,
+                "precipitation_mm": 0.0
+              },
+              {
+                "date": "2026-11-13",
+                "temp_max": 64.9,
+                "temp_min": 45.4,
+                "precipitation_mm": 0.0
+              },
+              {
+                "date": "2026-11-14",
+                "temp_max": 63.6,
+                "temp_min": 47.9,
+                "precipitation_mm": 5.1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M05_parallel_github_and_weather",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Một yêu cầu đa mục tiêu cần gọi đồng thời hai tool mới."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tôi sắp đi Đà Nẵng để dự hackathon."
+        },
+        {
+          "role": "user",
+          "content": "Tìm cho tôi 2 repo Python về weather API và thời tiết Đà Nẵng ngày mai."
+        },
+        {
+          "role": "user",
+          "content": "Nhiệt độ dùng độ C, repo xếp theo sao."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "github_search",
+            "args": {
+              "query": "weather API",
+              "language": "python",
+              "sort": "stars",
+              "max_results": 2
+            }
+          },
+          {
+            "name": "weather_forecast",
+            "args": {
+              "city": "Da Nang",
+              "days": 1,
+              "unit": "celsius"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "github_search",
+            "args": {
+              "query": "weather API",
+              "language": "python",
+              "sort": "stars",
+              "max_results": 2
+            }
+          },
+          {
+            "name": "weather_forecast",
+            "args": {
+              "city": "Da Nang",
+              "days": 1,
+              "unit": "celsius"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "github_search",
+          "args": {
+            "query": "weather API",
+            "language": "python",
+            "sort": "stars",
+            "max_results": 2
+          },
+          "result": {
+            "tool": "search_github_repos",
+            "query": "weather API",
+            "language": "python",
+            "sort": "stars",
+            "items": [
+              {
+                "title": "GauravSingh9356/J.A.R.V.I.S",
+                "url": "https://github.com/GauravSingh9356/J.A.R.V.I.S",
+                "source": "github.com",
+                "summary": "Personal Assistant built using python libraries. It does almost anything which includes sending emails, Optical Text Recognition, Dynamic News Reporting at any time with API integration, Todo list generator, Opens any website with just a voice command, Plays Music, Wikipedia searching, Dictionary with Intelligent Sensing i.e. auto spell checking, Weather Reporting i.e. temp, wind speed, humidity, YouTube searching, Google Map searching, Youtube Downloading, etc.",
+                "stars": 1462,
+                "language": "Python"
+              },
+              {
+                "title": "AbnormalDistributions/e_paper_weather_display",
+                "url": "https://github.com/AbnormalDistributions/e_paper_weather_display",
+                "source": "github.com",
+                "summary": "Raspberry Pi weather display using Waveshare e-paper display and Open Weather Map API",
+                "stars": 449,
+                "language": "Python"
+              }
+            ]
+          }
+        },
+        {
+          "tool": "weather_forecast",
+          "args": {
+            "city": "Da Nang",
+            "days": 1,
+            "unit": "celsius"
+          },
+          "result": {
+            "tool": "get_weather",
+            "city": "Da Nang",
+            "location": "Da Nang, Vietnam",
+            "unit": "celsius",
+            "days": 1,
+            "current": {
+              "temperature": 24.2,
+              "humidity": 89,
+              "precipitation_mm": 0.8
+            },
+            "daily": [
+              {
+                "date": "2026-11-10",
+                "temp_max": 25.1,
+                "temp_min": 23.0,
+                "precipitation_mm": 87.3
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
